@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
-require('dotenv').config();
+//require('dotenv').config();
 
 
 const systemPrompt = `You are an AI-powered customer support assistant for HeadstarterAI, a platform that provides AI-powered interviews for software engineering jobs. Your role is to help users with questions about our services, interview preparation, and technical support.
