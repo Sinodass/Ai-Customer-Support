@@ -1,7 +1,7 @@
 'use client'
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-
+import { useTheme, useMediaQuery } from "@mui/material";
 
 export default function Home() {
   const [messages, setMessages] = useState([
@@ -61,6 +61,9 @@ export default function Home() {
     }
   }
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Box 
       width="100vw"
@@ -75,17 +78,17 @@ export default function Home() {
     >
       <Stack 
         direction={'column'}
-        width="600px" 
-        height="700px"
+        width={isMobile ? "95%" : "600px"}
+        height={isMobile ? "95%" : "700px"}
         borderRadius={4} 
         sx={{
           backgroundColor: '#2c2c2c',
           boxShadow: '0px 10px 30px rgba(0, 0, 0, 0.5)',
         }} 
-        p={2} 
-        spacing={3}
+        p={isMobile ? 1 : 2}
+        spacing={2}
       >
-        <Typography variant='h4' color={'white'} textAlign={'center'} fontWeight={'bold'}>
+        <Typography variant={isMobile ? 'h5' : 'h4'} color={'white'} textAlign={'center'} fontWeight={'bold'}>
           MovieBot
         </Typography>
         <Stack 
@@ -122,6 +125,9 @@ export default function Home() {
                     p: 2,
                     maxWidth: '75%',
                     boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.2)',
+                    whiteSpace: 'pre-wrap',
+                    wordBreak: 'break-word',
+                    lineHeight: 1.5,
                   }}
                 >
                   {message.content}
@@ -129,9 +135,9 @@ export default function Home() {
               </Box>
             ))}
         </Stack>
-        <Stack direction={'row'} spacing={2}>
-          <TextField label=
-            'Type a message...'
+        <Stack direction={'row'} spacing={1}>
+          <TextField
+            label='Type a message...'
             variant='outlined'
             fullWidth
             value={message}
@@ -153,6 +159,9 @@ export default function Home() {
                 '& .MuiInputLabel-root.Mui-focused': {
                   color: '#e50914',
                 },
+                '& .MuiInputBase-root': {
+                  fontSize: isMobile ? '0.9rem' : '1rem',
+                },
               },
             }}
             InputLabelProps={{
@@ -161,16 +170,20 @@ export default function Home() {
               },
             }}
           />
-          <Button variant='contained' onClick={sendMessage} 
+          <Button 
+            variant='contained' 
+            onClick={sendMessage}
             sx={{
               backgroundColor: '#e50914',
               borderRadius: '20px',
+              padding: isMobile ? '6px 12px' : '6px 16px',
+              minWidth: isMobile ? '60px' : '64px',
               '&:hover': {
                 backgroundColor: '#b0070e',
               },
             }}
           >
-            Send
+            {isMobile ? 'Send' : 'Send'}
           </Button>
         </Stack>
       </Stack>
